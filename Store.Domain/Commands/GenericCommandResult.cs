@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Flunt.Notifications;
 using Store.Domain.Commands.Interfaces;
 
 namespace Store.Domain.Commands
@@ -25,6 +26,12 @@ namespace Store.Domain.Commands
         public void Fail(IEnumerable<string> messages)
         {
             this._messages.AddRange(messages);
+        }
+
+        public void Fail(IReadOnlyCollection<Notification> notifications)
+        {
+            var messages = notifications.Select(x => x.Message);
+            Fail(messages);
         }
     }
 }
